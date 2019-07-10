@@ -1,26 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-const users = [{
-  nombre: 'Ada',
-  apellido: 'Lovelace',
-  telefono: '1234567890',
-  email: 'contacto@gmail.com'
-}, {
-  nombre: 'Grace',
-  apellido: 'Hopper',
-  telefono: '087654321',
-  email: 'contacto@hotmail.com'
-}]
+const users = [];
 
 router.get('/users', (req, res) => {
   res.json(users);
 })
 
+router.post('/users', (req, res) => {
+  const nombre = req.body.nombre;
+  const direccion = req.body.direccion;
+  const email = req.body.email;
+  const telefono = req.body.telefono;
 
+  let nextId = 1;
+  if(users.length > 0) {
+    nextId = users[users.length-1].id+1;
+  };
 
+  const userToPush = {
+    id: nextId,
+    nombre: nombre,
+    direccion: direccion,
+    email: email,
+    telefono: telefono
+  };
 
+  users.push(userToPush);
+  console.log(userToPush);
 
-
+  res.json(userToPush);
+  
+ })
 
 module.exports = router;
