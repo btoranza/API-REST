@@ -51,19 +51,23 @@
                                     <label for="form-phone">Phone</label>
                                     <input type="number" class="form-control" id="form-phone" maxlength="15">
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id='save-btn'>Add</button>
+                                </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" id='save-btn'>Add</button>
-                        </div>
+
                     </div>
                 </div>
             </div>
 
             </div>
             <div id='filter-container'>
-                <input id='search' placeholder="Filter..." type='text'>
+                <form id='filter-form'>
+                    <input type="text" class="form-control" placeholder="Filter..." id='filter-input'>
+                    <button type="submit" class="btn btn-primary" id='filter-btn'>Filter</button>
+                </form> 
             </div>
             <table class="table table-striped">
                 <thead class="thead">

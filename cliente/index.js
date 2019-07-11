@@ -39,6 +39,11 @@ addButton.addEventListener('click', () => {
 
 const closeModal = () => {
     modal.style.display = 'none';
+    newName.classList.remove('has-error');
+    newEmail.classList.remove('has-error');
+    newAddress.classList.remove('has-error');
+    newPhone.classList.remove('has-error');
+    formNew.reset();
 }
 
 const closeButton = document.getElementsByClassName('close')[0];
@@ -71,25 +76,34 @@ const validar = () => {
     if(newName.value == ''){ 
         ok = false;
         msg += 'Name'
-        newName.style.borderColor = 'red';
+        newName.classList.add('has-error');
     }
 
     if(newEmail.value == ''){ 
         ok = false;
         msg += 'Email'
-        newEmail.style.borderColor = 'red';
+        newEmail.classList.add('has-error');   
+    // }else {
+    //     const regExp = new RegExp(/^[a-zA-Z0-9_\-.~]{2,}@[a-zA-Z0-9_\-.~]{2,}.[a-zA-Z]{2,4}$/);
+    //     const resultado = regExp.test(newEmail.value);
+
+    //     if(resultado === true) {
+    //         ok = false;
+    //         msg = 'Email incorrecto'
+    //         newEmail.classList.add('has-error');
+    //     }
     }
 
     if(newAddress.value == ''){ 
         ok = false;
         msg += 'Address'
-        newAddress.style.borderColor = 'red';
+        newAddress.classList.add('has-error');
     }
 
     if(newPhone.value == ''){ 
         ok = false;
         msg += 'Phone'
-        newPhone.style.borderColor = 'red';
+        newPhone.classList.add('has-error');
     }
 
     if( ok == false) {
@@ -124,13 +138,49 @@ formNew.addEventListener('submit', (e) => {
         .then(res => res.json())
         .then(newUser => {
             console.log(newUser);
+
+            closeModal(); 
+
+            bringUsers()
         })
-
-        closeModal();
-        formNew.reset();
-
     }
+  
 })
 
+const filterForm = document.getElementById('filter-form');
+
+filterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const filterInput = document.getElementById('filter-input');
+    const filterValue = filterInput.value;
+
+    fetch(`http://localhost:3000/api/users?search=${filterValue}`, {
+        method: 'get'
+    })
+    .then( res => res.json())
+    .then( filteredUsers => {
+
+        const tableBody = document.getElementById('table-body');
+        let usersList = filteredUsers.map(user => 
+        `<tr>
+            <td>
+            <input type="checkbox" class='css-checkbox' />
+            <label class='css-label'></label>
+            </td>
+            <td>${user.nombre}</td>
+            <td>${user.email}</td>
+            <td>${user.direccion}</td>
+            <td>${user.telefono}</td>
+            <td>
+                <i class="material-icons edit-icon" title="Edit">&#xE254;</i>
+                <i class="material-icons delete-icon" title="Delete">&#xE872;</i>
+            </td>
+        </tr>`
+    )
+    tableBody.innerHTML = usersList.join('');
+    }) 
+
+})
 
 

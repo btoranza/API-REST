@@ -83,3 +83,23 @@ background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_391ce065f36
 -ms-user-select: none;
 user-select: none;
 }
+
+.has-error {
+    border-color: red!important;
+}
+
+#filter-form {
+    display: flex;
+    width: 400px;
+}
+
+#filter-input {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#filter-btn {
+    display: inline-block;
+    background-color: #6187b6;
+    border-color: #6187b6;
+}
