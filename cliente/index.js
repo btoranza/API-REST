@@ -16,13 +16,30 @@ const bringUsers = () => {
             <td>${user.email}</td>
             <td>${user.direccion}</td>
             <td>${user.telefono}</td>
-            <td>
-                <i class="material-icons edit-icon" title="Edit">&#xE254;</i>
-                <i class="material-icons delete-icon" title="Delete">&#xE872;</i>
+            <td id='${user.id}'>
+                <div class='editBtn'><i class="material-icons edit-icon" title="Edit">&#xE254;</i></div>
+                <div class='deleteBtn'><i class="material-icons delete-icon" title="Delete">&#xE872;</i></div>
             </td>
         </tr>`
     )
-    tableBody.innerHTML = usersList.join('');
+        tableBody.innerHTML = usersList.join('');
+
+        const eliminar = e => {
+            const id = e.target.parentNode.parentNode.id;
+
+            // const deleteModal = document.getElementById('deleteModal');
+            // deleteModal.style.display = 'block';}
+            
+            fetch(`http://localhost:3000/api/users/${id}`, {
+                method: 'delete'
+            }).then(res => {
+                document.getElementById(id).parentElement.remove();
+            })
+        }
+
+        const deleteBtn = document.querySelectorAll('.deleteBtn');
+        deleteBtn.forEach( button => button.onclick = eliminar)
+
     })
 
 }
@@ -33,6 +50,7 @@ bringUsers();
 
 const addButton = document.getElementById('add-employee-btn');
 const modal = document.getElementsByClassName('modal')[0];
+
 addButton.addEventListener('click', () => {
     modal.style.display = 'block';    
 })
@@ -81,10 +99,11 @@ const validar = () => {
 
     if(newEmail.value == ''){ 
         ok = false;
-        msg += 'Email'
+        msg += 'Email';
         newEmail.classList.add('has-error');   
-    // }else {
-    //     const regExp = new RegExp(/^[a-zA-Z0-9_\-.~]{2,}@[a-zA-Z0-9_\-.~]{2,}.[a-zA-Z]{2,4}$/);
+    }
+    // else {
+    //     const regExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     //     const resultado = regExp.test(newEmail.value);
 
     //     if(resultado === true) {
@@ -92,7 +111,6 @@ const validar = () => {
     //         msg = 'Email incorrecto'
     //         newEmail.classList.add('has-error');
     //     }
-    }
 
     if(newAddress.value == ''){ 
         ok = false;
@@ -173,14 +191,15 @@ filterForm.addEventListener('submit', (e) => {
             <td>${user.direccion}</td>
             <td>${user.telefono}</td>
             <td>
-                <i class="material-icons edit-icon" title="Edit">&#xE254;</i>
-                <i class="material-icons delete-icon" title="Delete">&#xE872;</i>
+                <div id='editBtn'><i class="material-icons edit-icon" title="Edit">&#xE254;</i></div>
+                <div id='deleteBtn'><i class="material-icons delete-icon" title="Delete">&#xE872;</i></div>
             </td>
         </tr>`
-    )
-    tableBody.innerHTML = usersList.join('');
+        )
+
+        tableBody.innerHTML = usersList.join('');
+
     }) 
 
 })
-
 

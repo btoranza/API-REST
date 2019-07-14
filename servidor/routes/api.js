@@ -1,7 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
-const users = [];
+const users = [
+  {
+    id: 1,
+    nombre: 'Berenice',
+    direccion: 'mi calle',
+    email: 'btoranza@gmail.com',
+    telefono: 111000033,
+  },
+  {
+    id: 2,
+    nombre: 'Alma',
+    direccion: 'mi calle2',
+    email: 'alma@gmail.com',
+    telefono: 11100234240033, 
+  },
+  {
+    id: 3,
+    nombre: 'Pascal',
+    direccion: 'mi calle3',
+    email: 'pascal@gmail.com',
+    telefono: 15555555033,
+  }
+
+]
 
 router.get('/users', (req, res) => {
 
@@ -43,7 +66,6 @@ router.post('/users', (req, res) => {
         console.log('numeros en nombre o direccion')
         return res.status(400).send('Text fields cannot be filled with numbers only');
       }
-
     }
 
     const userToPush = {
@@ -61,8 +83,18 @@ router.post('/users', (req, res) => {
   }  
  })
 
- router.get('/users', (req, res) => {
-    
-})
+ router.delete('/users/:id', (req, res) => {
+   console.log(req.params.id);
+   const id = parseInt(req.params.id);
+
+   for (let i = 0; i < users.length; i++) {
+     if(users[i].id === id) {
+       users.splice(i, 1);
+     }
+   }
+   console.log(users);
+   res.json(users);
+
+}) 
 
 module.exports = router;
