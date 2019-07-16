@@ -91,8 +91,9 @@ const bringUsers = () => {
         const editar = e => {
 
             modal.style.display = 'block';
-            const id = e.target.parentNode.parentNode;
-            const userToEdit = id.parentElement;
+            const id = e.target.parentNode.parentNode.id;
+            const userToEdit = e.target.parentNode.parentNode.parentElement;
+            console.log(userToEdit);
 
             const nameToEdit = userToEdit.getElementsByClassName('user-name')[0];
             const emailToEdit = userToEdit.getElementsByClassName('user-email')[0];
