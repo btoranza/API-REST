@@ -2,9 +2,11 @@
 
 const addButton = document.getElementById('add-employee-btn');
 const modal = document.getElementsByClassName('modal')[0];
+let tipoSubmit = 0;
 
 addButton.addEventListener('click', () => {
     modal.style.display = 'block';    
+    tipoSubmit = 1;
 })
 
 const closeModal = () => {
@@ -90,7 +92,13 @@ const bringUsers = () => {
 
         const editar = e => {
 
+            tipoSubmit = 2;
+
             modal.style.display = 'block';
+
+            const addBtnModal = document.getElementById('save-btn');
+            addBtnModal.innerText = 'Edit';
+
             const id = e.target.parentNode.parentNode.id;
             const userToEdit = e.target.parentNode.parentNode.parentElement;
             console.log(userToEdit);
@@ -199,16 +207,16 @@ const validar = () => {
 
 // Agrego on submit al form y hago POST a la API con los nuevos datos
 
-formNew.addEventListener('submit', (e) => {
-    e.preventDefault();
-    validar()
+const agregar = a => {
+    a.preventDefault();
+    validar();
     if(validar()===true) {
 
         const newUser = {
             nombre: newName.value,
             email: newEmail.value,
             direccion: newAddress.value,
-            telefono: newPhone.value,
+            telefono: newPhone.value
         }
 
         fetch('http://localhost:3000/api/users', {
@@ -222,10 +230,21 @@ formNew.addEventListener('submit', (e) => {
 
             closeModal(); 
 
-            bringUsers()
+            bringUsers();
         })
     }
-  
+}
+
+formNew.addEventListener('submit', (e) => {
+
+    switch(tipoSubmit){
+        case 1:
+            agregar(e);
+            break;
+        case 2:
+            editar(e);
+            break;
+    }
 })
 
 const filterForm = document.getElementById('filter-form');
