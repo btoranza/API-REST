@@ -1,30 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const users = [
-  {
-    id: 1,
-    nombre: 'Berenice',
-    direccion: 'mi calle',
-    email: 'btoranza@gmail.com',
-    telefono: 111000033,
-  },
-  {
-    id: 2,
-    nombre: 'Alma',
-    direccion: 'mi calle2',
-    email: 'alma@gmail.com',
-    telefono: 11100234240033, 
-  },
-  {
-    id: 3,
-    nombre: 'Pascal',
-    direccion: 'mi calle3',
-    email: 'pascal@gmail.com',
-    telefono: 15555555033,
-  }
-
-]
+const users = [];
 
 router.get('/users', (req, res) => {
 
